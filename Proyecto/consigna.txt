@@ -1,0 +1,5 @@
+Seguimiento de algún usuario, 
+para verificar si se ha conectado con distintos dispositivos y en que fechas, 
+a través de la MAC Cliente. 
+Debe incluir una lista de usuarios y la posibilidad de ingresar un rango de fechas.
+

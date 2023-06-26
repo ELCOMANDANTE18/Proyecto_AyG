@@ -1,34 +1,20 @@
-Haciendo un seguimiento del usuario, 
-comprobamos si ha iniciado sesión en diferentes dispositivos y en qué fechas, 
-utilizando la dirección MAC del cliente. 
-Incluye una lista de usuarios y la opción de ingresar un intervalo de fechas.
+El objetivo del trabajo es seguir la pista de los usuarios y verificar si han iniciado sesión en diferentes dispositivos y en qué fechas, 
+utilizando la dirección MAC del cliente. Para lograr esto, debemos crear un listado que contenga ciertos campos específicos de información.
 
-Hay en total de 16 columnas:
-# ID,
-# ID_Sesion,
-# ID_Conexión_unico,
-# Usuario,
-# IP_NAS_AP,
-# Tipo__conexión,
-# Inicio_de_Conexión_Dia,
-# Inicio_de_Conexión_Hora,
-# FIN_de_Conexión_Dia,
-# FIN_de_Conexión_Hora,
-# Session_Time,
-# Input_Octects,
-# Output_Octects,
-# MAC_AP,
-# MAC_Cliente,
-# Razon_de_Terminación_de_Sesión
+En cuanto al contenido del proyecto, es necesario proporcionar una explicación sobre la información que se obtiene y cómo es útil. 
+En este caso, nos interesa obtener un listado que contenga los siguientes campos:
 
-A nosotros nos interesa obtener un listado que tenga lo siguiente:
+1. ID: identificador único del registro.
+2. Usuario: nombre del usuario que inició sesión.
+3. Inicio_de_Conexión_Dia: fecha de inicio de la conexión.
+4. FIN_de_Conexión_Dia: fecha de finalización de la conexión.
+5. MAC_Cliente: dirección MAC del dispositivo del cliente.
 
-#ID,
-#Usuario,
-#Inicio_de_Conexión_Dia,
-#FIN_de_Conexión_Dia,
-#MAC_Cliente
+Es fundamental destacar que el trabajo debe ser implementado utilizando Python y las herramientas y conocimientos vistos en la materia. 
+Para lograrlo, se recomienda utilizar expresiones regulares y el módulo "re" de Python. 
+También es necesario identificar los campos relevantes a mostrar de acuerdo a la aplicación que se está desarrollando. 
+Finalmente, la información obtenida deberá mostrarse en una interfaz desarrollada y exportarse a Excel.
 
-Generando un listado de 5 columnas
-
-
+Con estos requisitos y objetivos en mente, 
+debemos asegurarnos de generar un listado que contenga estas 5 columnas de información: 
+ID, Usuario, Inicio_de_Conexión_Dia, FIN_de_Conexión_Dia y MAC_Cliente.

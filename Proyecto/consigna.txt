@@ -1,5 +1,5 @@
-Seguimiento de algún usuario, 
-para verificar si se ha conectado con distintos dispositivos y en que fechas, 
-a través de la MAC Cliente. 
-Debe incluir una lista de usuarios y la posibilidad de ingresar un rango de fechas.
+Haciendo un seguimiento del usuario, 
+comprobamos si ha iniciado sesión en diferentes dispositivos y en qué fechas, 
+utilizando la dirección MAC del cliente. 
+Incluye una lista de usuarios y la opción de ingresar un intervalo de fechas.
 

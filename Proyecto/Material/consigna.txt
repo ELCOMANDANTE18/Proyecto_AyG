@@ -3,3 +3,32 @@ comprobamos si ha iniciado sesión en diferentes dispositivos y en qué fechas,
 utilizando la dirección MAC del cliente. 
 Incluye una lista de usuarios y la opción de ingresar un intervalo de fechas.
 
+Hay en total de 16 columnas:
+# ID,
+# ID_Sesion,
+# ID_Conexión_unico,
+# Usuario,
+# IP_NAS_AP,
+# Tipo__conexión,
+# Inicio_de_Conexión_Dia,
+# Inicio_de_Conexión_Hora,
+# FIN_de_Conexión_Dia,
+# FIN_de_Conexión_Hora,
+# Session_Time,
+# Input_Octects,
+# Output_Octects,
+# MAC_AP,
+# MAC_Cliente,
+# Razon_de_Terminación_de_Sesión
+
+A nosotros nos interesa obtener un listado que tenga lo siguiente:
+
+#ID,
+#Usuario,
+#Inicio_de_Conexión_Dia,
+#FIN_de_Conexión_Dia,
+#MAC_Cliente
+
+Generando un listado de 5 columnas
+
+

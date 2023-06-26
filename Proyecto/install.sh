@@ -1,2 +1,2 @@
-pip3 install -r requirimentes.txt
+pip3 install -r requirements.txt
 

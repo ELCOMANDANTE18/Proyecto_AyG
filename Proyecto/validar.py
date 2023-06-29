@@ -2,16 +2,37 @@ import tkinter as tk
 from tkinter import ttk, filedialog
 import pandas as pd
 import re
+import os
 
 # Crear la ventana principal
 root = tk.Tk()
 root.title("Registro de Conexiones")
 
-# Leer el archivo CSV y crear un DataFrame
-df = pd.read_csv("~/Coding/Facultad/Proyecto_AyG/Proyecto/Material/ByteNet.csv")
+# Función para importar el archivo CSV
+def importar_csv():
+    # Abrir el cuadro de diálogo para seleccionar el archivo
+    archivo = filedialog.askopenfilename(filetypes=[("Archivo CSV", "*.csv")])
 
-# Eliminar las filas que no tienen 16 valores
-df = df.dropna(thresh=16)
+    # Leer el archivo CSV y crear un DataFrame
+    global df
+    df = pd.read_csv(archivo)
+
+    # Eliminar las filas que no tienen 16 valores
+    df = df.dropna(thresh=16)
+
+    # Obtener solo el nombre del archivo
+    nombre_archivo = os.path.basename(archivo)
+
+    # Actualizar la etiqueta de la ruta del archivo con el nombre
+    ruta_label.config(text=nombre_archivo)
+
+# Crear el botón para importar el archivo CSV
+importar_button = ttk.Button(root, text="Importar CSV", command=importar_csv)
+importar_button.grid(column=0, row=0, padx=5, pady=5, sticky=tk.W)
+
+# Crear la etiqueta para mostrar la ruta del archivo
+ruta_label = ttk.Label(root, text="")
+ruta_label.grid(column=1, row=0, padx=5, pady=5, sticky=tk.W)
 
 # Definir las variables para entrada de datos
 busqueda_entry = ttk.Entry(root)
@@ -37,8 +58,24 @@ def buscar():
         resultado_text.delete("1.0", tk.END)
         resultado_text.insert(tk.END, "Error: El formato de fecha es inválido. Por favor ingrese una fecha en el formato AAAA-MM-DD.")
     else:
+        # Expresión regular para el usuario
+        usuario_regex = r'^[a-zA-Z0-9_-]+$'
+
+        # Expresión regular para la fecha
+        fecha_regex = r'^[0-9-]+$'
+
+        # Expresión regular para la dirección MAC
+        mac_regex = r'^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$'
+
+        # Filtrar las filas según las expresiones regulares
+        df_filtrado = df[df['Usuario'].str.match(usuario_regex, na=False) &
+                         df['Inicio_de_Conexión_Dia'].str.match(fecha_regex, na=False) &
+                         df['FIN_de_Conexión_Dia'].str.match(fecha_regex, na=False) &
+                         df['MAC_Cliente'].str.match(mac_regex, na=False)]
+
         # Filtrar las filas por búsqueda y fecha y asignarlas a un nuevo DataFrame
-        df_filtrado = df.loc[(df['Usuario'].str.contains(busqueda, na=False)) & (df['Inicio_de_Conexión_Dia'].between(fecha_inicio, fecha_fin))]
+        df_filtrado = df_filtrado.loc[(df_filtrado['Usuario'].str.contains(busqueda, na=False)) &
+                                      (df_filtrado['Inicio_de_Conexión_Dia'].between(fecha_inicio, fecha_fin))]
 
         # Seleccionar las columnas relevantes y mostrar el resultado
         global df_resultado
@@ -49,25 +86,28 @@ def buscar():
 buscar_button = ttk.Button(root, text="Buscar", command=buscar)
 buscar_button.grid(column=4, row=1, padx=5, pady=5, sticky=tk.W)
 
-# Crear un cuadro de texto scrolleable para mostrar los resultados
-resultado_label = ttk.Label(root, text="Resultados:")
-resultado_label.grid(column=0, row=2, padx=5, pady=5, sticky=tk.W)
-resultado_text = tk.Text(root, height=10, width=80)
-resultado_text.grid(column=0, row=3, columnspan=5, padx=5, pady=5, sticky=tk.W+tk.E+tk.N+tk.S)
-resultado_scroll = ttk.Scrollbar(root, command=resultado_text.yview)
-resultado_scroll.grid(column=5, row=3, padx=5, pady=5, sticky=tk.N+tk.S)
-resultado_text.config(yscrollcommand=resultado_scroll.set)
+# Crear el botón para exportar a Excel
+def exportar_excel():
+    # Abrir el cuadro de diálogo para seleccionar la ubicación del archivo
+    archivo = filedialog.asksaveasfilename(defaultextension=".xlsx", filetypes=[("Archivo de Excel", "*.xlsx")])
 
-# Crear un botón de exportación
-def exportar():
-    # Exportar el DataFrame resultante a un archivo Excel utilizando la función to_excel()
-    nombre_archivo = filedialog.asksaveasfilename(defaultextension=".xlsx", filetypes=[("Excel Workbook", "*.xlsx")])
-    if nombre_archivo:
-        global df_resultado
-        df_resultado.to_excel(nombre_archivo, index=False)
+    # Guardar el DataFrame en el archivo de Excel
+    df_resultado.to_excel(archivo, index=False)
 
-exportar_button = ttk.Button(root, text="Exportar a Excel", command=exportar)
-exportar_button.grid(column=0, row=4, padx=5, pady=5, sticky=tk.W)
+exportar_button = ttk.Button(root, text="Exportar a Excel", command=exportar_excel)
+exportar_button.grid(column=0, row=3, padx=5, pady=5, sticky=tk.W)
 
-# Ejecutar la ventana principal
+# Crear el widget de texto para mostrar el resultado
+resultado_frame = ttk.Frame(root)
+resultado_frame.grid(column=0, row=2, columnspan=5, padx=5, pady=5, sticky=tk.NSEW)
+
+resultado_text = tk.Text(resultado_frame, height=20, width=80)
+resultado_text.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+
+scrollbar = ttk.Scrollbar(resultado_frame, orient=tk.VERTICAL, command=resultado_text.yview)
+scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+
+resultado_text.config(yscrollcommand=scrollbar.set)
+
+# Iniciar la ventana principal
 root.mainloop()

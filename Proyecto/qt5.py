@@ -1,6 +1,6 @@
 import sys
 from PyQt5 import QtWidgets, QtGui
-from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QLabel, QLineEdit, QPushButton, QVBoxLayout, QWidget, QTableWidget, QTableWidgetItem
+from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QLabel, QLineEdit, QPushButton, QTextEdit, QVBoxLayout, QWidget, QTableWidget, QTableWidgetItem
 import pandas as pd
 import re
 import os
@@ -34,11 +34,12 @@ class MainWindow(QMainWindow):
         exportar_button = QPushButton("Exportar a Excel", self)
         exportar_button.clicked.connect(self.exportar_excel)
 
-        # Crear la tabla para mostrar los resultados
+        # Crear el widget de la tabla para mostrar el resultado
         self.tabla_resultado = QTableWidget(self)
+        self.tabla_resultado.setColumnCount(4)
 
-        # Crear el QLabel para mostrar mensajes de error y exportación exitosa
-        self.mensaje_label = QLabel(self)
+        # Crear la etiqueta para mostrar mensajes
+        self.mensaje_label = QLabel("", self)
 
         # Configurar el diseño de la ventana principal
         central_widget = QWidget()
@@ -117,7 +118,7 @@ class MainWindow(QMainWindow):
 
             # Seleccionar las columnas relevantes y mostrar el resultado
             self.df_resultado = df_filtrado.loc[:, ['Usuario', 'Inicio_de_Conexión_Dia', 'FIN_de_Conexión_Dia', 'MAC_Cliente']]
-            self.mostrar_resultado(self.df_resultado)
+            self.mostrar_tabla_resultado()
 
     def exportar_excel(self):
         if self.df_resultado.empty:
@@ -140,35 +141,41 @@ class MainWindow(QMainWindow):
             except Exception as e:
                 self.mostrar_error(f"Error al exportar a Excel: {str(e)}")
 
-    def mostrar_resultado(self, df):
-        num_filas, num_columnas = df.shape
+    def mostrar_tabla_resultado(self):
+        # Limpiar la tabla
+        self.tabla_resultado.clearContents()
+        self.tabla_resultado.setRowCount(0)
 
-        # Configurar la tabla con el número de filas y columnas necesarias
+        # Establecer el número de filas y columnas
+        num_filas = len(self.df_resultado)
+        num_columnas = len(self.df_resultado.columns)
+
+        # Establecer el número de filas y columnas en la tabla
         self.tabla_resultado.setRowCount(num_filas)
         self.tabla_resultado.setColumnCount(num_columnas)
 
-        # Llenar la tabla con los datos del DataFrame
-        for i, fila in enumerate(df.values):
-            for j, dato in enumerate(fila):
-                item = QTableWidgetItem(str(dato))
+        # Establecer los nombres de las columnas
+        nombres_columnas = self.df_resultado.columns.tolist()
+        self.tabla_resultado.setHorizontalHeaderLabels(nombres_columnas)
+
+        # Recorrer los datos del DataFrame y agregarlos a la tabla
+        for i, fila in enumerate(self.df_resultado.itertuples(index=False), 0):
+            for j, valor in enumerate(fila, 0):
+                item = QTableWidgetItem(str(valor))
                 self.tabla_resultado.setItem(i, j, item)
 
-        self.mensaje_label.setText("")
-
-    def mostrar_error(self, error):
-        self.tabla_resultado.clearContents()  # Limpiar la tabla
-        self.tabla_resultado.setRowCount(0)
-        self.tabla_resultado.setColumnCount(0)
-        self.mensaje_label.setText(error)
+        # Ajustar el tamaño de las columnas al contenido
+        self.tabla_resultado.resizeColumnsToContents()
 
     def mostrar_mensaje(self, mensaje):
-        self.tabla_resultado.clearContents()  # Limpiar la tabla
-        self.tabla_resultado.setRowCount(0)
-        self.tabla_resultado.setColumnCount(0)
         self.mensaje_label.setText(mensaje)
 
-if __name__ == '__main__':
+    def mostrar_error(self, error):
+        self.mensaje_label.setText(f"<span style='color: red'>{error}</span>")
+
+
+if __name__ == "__main__":
     app = QApplication(sys.argv)
-    main_window = MainWindow()
-    main_window.show()
+    window = MainWindow()
+    window.show()
     sys.exit(app.exec_())

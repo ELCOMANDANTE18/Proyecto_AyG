@@ -54,6 +54,9 @@ class MainWindow(QMainWindow):
         layout.addWidget(self.resultado_text)
         self.setCentralWidget(central_widget)
 
+        # Establecer tamaño de la ventana
+        self.resize(640, 480)
+
     def importar_csv(self):
         # Abrir el cuadro de diálogo para seleccionar el archivo
         archivo, _ = QFileDialog.getOpenFileName(self, "Importar archivo CSV", "", "Archivo CSV (*.csv)")
@@ -72,7 +75,7 @@ class MainWindow(QMainWindow):
             self.ruta_label.setText(nombre_archivo)
 
     def buscar(self):
-        if self.df is not None and not self.df.empty:
+        if self.df is None or self.df.empty:  # Corregido: verificar si el DataFrame no está vacío
             self.resultado_text.setPlainText("Error: No se ha importado ningún archivo CSV.")
             return
 
@@ -96,10 +99,6 @@ class MainWindow(QMainWindow):
             mac_regex = r'^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$'
 
             # Filtrar las filas según las expresiones regulares
-            if self.df is None:
-                self.resultado_text.setPlainText("Error: No se ha importado ningún archivo CSV.")
-                return
-
             df_filtrado = self.df[
                 self.df['Usuario'].str.match(usuario_regex, na=False) &
                 self.df['Inicio_de_Conexión_Dia'].str.match(fecha_regex, na=False) &
@@ -126,8 +125,17 @@ class MainWindow(QMainWindow):
         archivo, _ = QFileDialog.getSaveFileName(self, "Exportar a Excel", "", "Archivo de Excel (*.xlsx)")
 
         if archivo:
-            # Guardar el DataFrame en el archivo de Excel
-            self.df_resultado.to_excel(archivo, index=False)
+            try:
+                # Verificar si la extensión .xlsx ya está presente en el nombre del archivo
+                _, extension = os.path.splitext(archivo)
+                if extension.lower() != ".xlsx":
+                    archivo += ".xlsx"
+
+                # Establecer el motor como 'openpyxl' para escribir el archivo de Excel
+                self.df_resultado.to_excel(archivo, index=False, engine='openpyxl')
+                self.resultado_text.setPlainText("Exportación exitosa a Excel.")
+            except Exception as e:
+                self.resultado_text.setPlainText(f"Error al exportar a Excel: {str(e)}")
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

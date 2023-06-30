@@ -1,6 +1,6 @@
 import sys
 from PyQt5 import QtWidgets, QtGui
-from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QLabel, QLineEdit, QPushButton, QTextEdit, QVBoxLayout, QWidget
+from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QLabel, QLineEdit, QPushButton, QVBoxLayout, QWidget, QTableWidget, QTableWidgetItem
 import pandas as pd
 import re
 import os
@@ -34,9 +34,11 @@ class MainWindow(QMainWindow):
         exportar_button = QPushButton("Exportar a Excel", self)
         exportar_button.clicked.connect(self.exportar_excel)
 
-        # Crear el widget de texto para mostrar el resultado
-        self.resultado_text = QTextEdit(self)
-        self.resultado_text.setReadOnly(True)
+        # Crear la tabla para mostrar los resultados
+        self.tabla_resultado = QTableWidget(self)
+
+        # Crear el QLabel para mostrar mensajes de error y exportación exitosa
+        self.mensaje_label = QLabel(self)
 
         # Configurar el diseño de la ventana principal
         central_widget = QWidget()
@@ -51,11 +53,12 @@ class MainWindow(QMainWindow):
         layout.addWidget(self.fecha_fin_entry)
         layout.addWidget(buscar_button)
         layout.addWidget(exportar_button)
-        layout.addWidget(self.resultado_text)
+        layout.addWidget(self.tabla_resultado)
+        layout.addWidget(self.mensaje_label)
         self.setCentralWidget(central_widget)
 
         # Establecer tamaño de la ventana
-        self.resize(640, 480)
+        self.resize(800, 600)
 
     def importar_csv(self):
         # Abrir el cuadro de diálogo para seleccionar el archivo
@@ -76,7 +79,7 @@ class MainWindow(QMainWindow):
 
     def buscar(self):
         if self.df is None or self.df.empty:  # Corregido: verificar si el DataFrame no está vacío
-            self.resultado_text.setPlainText("Error: No se ha importado ningún archivo CSV.")
+            self.mostrar_error("Error: No se ha importado ningún archivo CSV.")
             return
 
         # Obtener los valores de búsqueda y fecha
@@ -87,7 +90,7 @@ class MainWindow(QMainWindow):
         # Validar el formato de fecha
         fecha_regex = r'^\d{4}-\d{2}-\d{2}$'
         if not re.match(fecha_regex, fecha_inicio) or not re.match(fecha_regex, fecha_fin):
-            self.resultado_text.setPlainText("Error: El formato de fecha es inválido. Por favor ingrese una fecha en el formato AAAA-MM-DD.")
+            self.mostrar_error("Error: El formato de fecha es inválido. Por favor ingrese una fecha en el formato AAAA-MM-DD.")
         else:
             # Expresión regular para el usuario
             usuario_regex = r'^[a-zA-Z0-9_-]+$'
@@ -114,11 +117,11 @@ class MainWindow(QMainWindow):
 
             # Seleccionar las columnas relevantes y mostrar el resultado
             self.df_resultado = df_filtrado.loc[:, ['Usuario', 'Inicio_de_Conexión_Dia', 'FIN_de_Conexión_Dia', 'MAC_Cliente']]
-            self.resultado_text.setPlainText(self.df_resultado.to_string(index=False))
+            self.mostrar_resultado(self.df_resultado)
 
     def exportar_excel(self):
         if self.df_resultado.empty:
-            self.resultado_text.setPlainText("Error: No hay datos para exportar.")
+            self.mostrar_error("Error: No hay datos para exportar.")
             return
 
         # Abrir el cuadro de diálogo para seleccionar la ubicación del archivo
@@ -133,9 +136,36 @@ class MainWindow(QMainWindow):
 
                 # Establecer el motor como 'openpyxl' para escribir el archivo de Excel
                 self.df_resultado.to_excel(archivo, index=False, engine='openpyxl')
-                self.resultado_text.setPlainText("Exportación exitosa a Excel.")
+                self.mostrar_mensaje("Exportación exitosa a Excel.")
             except Exception as e:
-                self.resultado_text.setPlainText(f"Error al exportar a Excel: {str(e)}")
+                self.mostrar_error(f"Error al exportar a Excel: {str(e)}")
+
+    def mostrar_resultado(self, df):
+        num_filas, num_columnas = df.shape
+
+        # Configurar la tabla con el número de filas y columnas necesarias
+        self.tabla_resultado.setRowCount(num_filas)
+        self.tabla_resultado.setColumnCount(num_columnas)
+
+        # Llenar la tabla con los datos del DataFrame
+        for i, fila in enumerate(df.values):
+            for j, dato in enumerate(fila):
+                item = QTableWidgetItem(str(dato))
+                self.tabla_resultado.setItem(i, j, item)
+
+        self.mensaje_label.setText("")
+
+    def mostrar_error(self, error):
+        self.tabla_resultado.clearContents()  # Limpiar la tabla
+        self.tabla_resultado.setRowCount(0)
+        self.tabla_resultado.setColumnCount(0)
+        self.mensaje_label.setText(error)
+
+    def mostrar_mensaje(self, mensaje):
+        self.tabla_resultado.clearContents()  # Limpiar la tabla
+        self.tabla_resultado.setRowCount(0)
+        self.tabla_resultado.setColumnCount(0)
+        self.mensaje_label.setText(mensaje)
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

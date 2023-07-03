@@ -95,7 +95,7 @@ El programa filtra automáticamente las filas con valores corruptos, nulos o inc
               <img src="https://images.weserv.nl/?url=https://avatars.githubusercontent.com/u/102122973?v=latest&h=128&w=128&fit=cover&mask=circle&maxage=7d">
             </b>
             <br>
-            <img src="https://readme-typing-svg.herokuapp.com/?font=Iosevka&duration=3000&pause=1000&color=FFFFFF&center=true&width=435&lines=Facundo+Gabriel+Mala+Palleres;Legajo%3A+XXXXXX;f.mala%40alumno.um.edu.ar">
+            <img src="https://readme-typing-svg.herokuapp.com/?font=Iosevka&duration=3000&pause=1000&color=FFFFFF&center=true&width=435&lines=Facundo+Gabriel+Mala+Palleres;Legajo%3A+61244;f.mala%40alumno.um.edu.ar">
             <br>
             <b>
             </b>
@@ -114,7 +114,7 @@ El programa filtra automáticamente las filas con valores corruptos, nulos o inc
               <img src="https://images.weserv.nl/?url=https://avatars.githubusercontent.com/u/90203616?v=latest&h=128&w=128&fit=cover&mask=circle&maxage=7d">
             </b>
             <br>
-            <img src="https://readme-typing-svg.herokuapp.com/?font=Iosevka&duration=3000&pause=1000&color=FFFFFF&center=true&width=435&lines=Matías+Agustín+Pérez;Legajo%3A+XXXXXX;maag.perez%40alumno.um.edu.ar">
+            <img src="https://readme-typing-svg.herokuapp.com/?font=Iosevka&duration=3000&pause=1000&color=FFFFFF&center=true&width=435&lines=Matías+Agustín+Pérez;Legajo%3A+61218;maag.perez%40alumno.um.edu.ar">
             <br>
             <b>
             </b>
@@ -133,7 +133,7 @@ El programa filtra automáticamente las filas con valores corruptos, nulos o inc
               <img src="https://images.weserv.nl/?url=https://avatars.githubusercontent.com/u/102602385?v=latest&h=128&w=128&fit=cover&mask=circle&maxage=7d">
             </b>
             <br>
-            <img src="https://readme-typing-svg.herokuapp.com/?font=Iosevka&duration=3000&pause=1000&color=FFFFFF&center=true&width=435&lines=Anna+Clara+Páez+Rocha;Legajo%3A+XXXXXX;ac.paez%40alumno.um.edu.ar">
+            <img src="https://readme-typing-svg.herokuapp.com/?font=Iosevka&duration=3000&pause=1000&color=FFFFFF&center=true&width=435&lines=Anna+Clara+Páez+Rocha;Legajo%3A+61164;ac.paez%40alumno.um.edu.ar">
             <br>
             <b>
             </b>

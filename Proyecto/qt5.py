@@ -48,15 +48,15 @@ class MainWindow(QMainWindow):
         layout.addWidget(self.ruta_label)
         layout.addWidget(QLabel("Búsqueda:"))
         layout.addWidget(self.busqueda_entry)
+        layout.addWidget(self.mensaje_label)
         layout.addWidget(QLabel("Fecha inicio:"))
         layout.addWidget(self.fecha_inicio_entry)
         layout.addWidget(QLabel("Fecha fin:"))
         layout.addWidget(self.fecha_fin_entry)
         layout.addWidget(buscar_button)
-        layout.addWidget(exportar_button)
         layout.addWidget(self.tabla_resultado)
-        layout.addWidget(self.mensaje_label)
         self.setCentralWidget(central_widget)
+        layout.addWidget(exportar_button)
 
         # Establecer tamaño de la ventana
         self.resize(800, 600)
@@ -120,6 +120,9 @@ class MainWindow(QMainWindow):
             self.df_resultado = df_filtrado.loc[:, ['Usuario', 'Inicio_de_Conexión_Dia', 'FIN_de_Conexión_Dia', 'MAC_Cliente']]
             self.mostrar_tabla_resultado()
 
+            # Borrar el mensaje de error
+            self.mensaje_label.setText("")
+
     def exportar_excel(self):
         if self.df_resultado.empty:
             self.mostrar_error("Error: No hay datos para exportar.")
@@ -137,7 +140,7 @@ class MainWindow(QMainWindow):
 
                 # Establecer el motor como 'openpyxl' para escribir el archivo de Excel
                 self.df_resultado.to_excel(archivo, index=False, engine='openpyxl')
-                self.mostrar_mensaje("Exportación exitosa a Excel.")
+                self.mostrar_mensaje("<span style='color: green'>Exportación exitosa a Excel.</span>")
             except Exception as e:
                 self.mostrar_error(f"Error al exportar a Excel: {str(e)}")
 

@@ -18,7 +18,7 @@ chmod +x install.sh
 ./install.sh
 ```
 ## Modo de uso
-1. Ejecutar `buscar.py`
+1. Ejecutar `buscar.py` desde el directorio del archivo.
 ```
 python3 buscar.py
 ```

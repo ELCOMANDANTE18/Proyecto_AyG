@@ -1,6 +1,8 @@
 import sys
 from PyQt5 import QtWidgets, QtGui
 from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QLabel, QLineEdit, QPushButton, QTextEdit, QHBoxLayout, QVBoxLayout, QWidget, QTableWidget, QTableWidgetItem, QListWidget, QMessageBox
+from PyQt5.QtGui import QPixmap
+import qdarkstyle
 import pandas as pd
 import re
 import os
@@ -18,6 +20,9 @@ class MainWindow(QMainWindow):
         # Crear el botón para importar el archivo CSV
         importar_button = QPushButton("Importar CSV", self)
         importar_button.clicked.connect(self.importar_csv)
+        importar_button.setIcon(QtGui.QIcon("./icons/file-import.svg"))
+        # Establecer el tamaño máximo del botón
+        importar_button.setMaximumWidth(120)
 
         # Crear la etiqueta para mostrar la ruta del archivo
         self.ruta_label = QLabel("", self)
@@ -30,10 +35,16 @@ class MainWindow(QMainWindow):
         # Crear el botón para buscar
         buscar_button = QPushButton("Buscar", self)
         buscar_button.clicked.connect(self.buscar)
+        buscar_button.setIcon(QtGui.QIcon("./icons/magnify.svg"))
+        # Establecer el tamaño máximo del botón
+        buscar_button.setMaximumWidth(70)
 
         # Crear el botón para exportar a Excel
         exportar_button = QPushButton("Exportar a Excel", self)
         exportar_button.clicked.connect(self.exportar_excel)
+        exportar_button.setIcon(QtGui.QIcon("./icons/file-excel.svg"))
+        # Establecer el tamaño máximo del botón
+        exportar_button.setMaximumWidth(120)
 
         # Crear el widget de la tabla para mostrar el resultado
         self.tabla_resultado = QTableWidget(self)
@@ -50,8 +61,12 @@ class MainWindow(QMainWindow):
         self.lista_usuarios.itemClicked.connect(self.copiar_usuario)
 
         # Crear botón "Acerca de"
-        acerca_de_button = QPushButton("i", self)
+        acerca_de_button = QPushButton("", self)
         acerca_de_button.clicked.connect(self.mostrar_acerca_de)
+        # Establecer el tooltip
+        acerca_de_button.setToolTip("Acerca de...")
+        # SVG de la información
+        acerca_de_button.setIcon(QtGui.QIcon("./icons/information.svg"))
 
         # Crear la zona de importación
         importar_layout = QHBoxLayout()
@@ -110,6 +125,9 @@ class MainWindow(QMainWindow):
 
         layout.addLayout(mensaje_layout)
         self.setCentralWidget(central_widget)
+
+        # Establecer tema oscuro
+        self.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5())
 
         # Establecer tamaño de la ventana
         self.resize(800, 600)

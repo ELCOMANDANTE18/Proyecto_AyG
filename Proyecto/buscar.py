@@ -79,7 +79,7 @@ class MainWindow(QMainWindow):
             self.ruta_label.setText(nombre_archivo)
 
     def buscar(self):
-        if self.df is None or self.df.empty:  # Corregido: verificar si el DataFrame no está vacío
+        if self.df is None or self.df.empty:  # Verificar si el DataFrame no está vacío
             self.mostrar_error("Error: No se ha importado ningún archivo CSV.")
             return
 

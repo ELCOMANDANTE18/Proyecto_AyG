@@ -26,23 +26,23 @@ python3 buscar.py
 ```
 2. Se abrirá una ventana
 
-![imagen](https://github.com/ELCOMANDANTE18/Proyecto_AyG/assets/96461803/3fb47343-ba2e-4501-8965-eaf76bc6bb23)
+![imagen](https://github.com/ELCOMANDANTE18/Proyecto_AyG/assets/96461803/b214daf8-7e59-4aed-851f-62bb73b28969)
 
 3. Al presionar "Importar CSV" se abrirá el explorador de archivos para seleccionar el .csv a filtrar. Se ha incluido el archivo `ByteNet.csv` en `Proyecto/Material`
 
-![imagen](https://github.com/ELCOMANDANTE18/Proyecto_AyG/assets/96461803/4382dca1-f249-4093-98ea-f781902d0978)
+![imagen](https://github.com/ELCOMANDANTE18/Proyecto_AyG/assets/96461803/a81306e3-89bf-4adf-a6a5-53764ee96328)
 
-4. En el cuadro de búsqueda se coloca el nombre de usuario a filtrar, y en los otros recuadros el rango de fechas deseado en formato AAAA-MM-DD
+4. Se mostrará la lista de usuarios. Puede elegir el que desea buscar o escribirlo manualmente. En los otros recuadros se debe ingresar el rango de fechas deseado en formato AAAA-MM-DD
 
-![imagen](https://github.com/ELCOMANDANTE18/Proyecto_AyG/assets/96461803/cae43db6-7b70-4238-a53f-b6b6b5fc84c5)
+![imagen](https://github.com/ELCOMANDANTE18/Proyecto_AyG/assets/96461803/4cf3b462-5fea-4089-9e35-71142049f037)
 
 5. Al presionar `Buscar`, se mostrará una vista previa de los datos filtrados
 
-![imagen](https://github.com/ELCOMANDANTE18/Proyecto_AyG/assets/96461803/b9848e69-6d09-4c90-9aaa-8697bc910712)
+![imagen](https://github.com/ELCOMANDANTE18/Proyecto_AyG/assets/96461803/82dedcec-dfdf-4a33-8c2a-ad69886ac531)
 
 6. El resultado se puede `Exportar a Excel`
 
-![imagen](https://github.com/ELCOMANDANTE18/Proyecto_AyG/assets/96461803/a9a45288-7455-4a86-984a-6f71ae9a2116)
+![imagen](https://github.com/ELCOMANDANTE18/Proyecto_AyG/assets/96461803/a36010dc-2843-4085-bbdc-eaf5aa553154)
 
 ## Notas
 El programa filtra automáticamente las filas con valores corruptos, nulos o incorrectos.

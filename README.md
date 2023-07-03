@@ -28,7 +28,7 @@ chmod +x install.sh
 python3 buscar.py
 ```
 - Se abrirá una ventana
-- 
+
 ![imagen](https://github.com/ELCOMANDANTE18/Proyecto_AyG/assets/96461803/3fb47343-ba2e-4501-8965-eaf76bc6bb23)
 - Al presionar "Importar CSV" se abrirá el explorador de archivos para seleccionar el .csv a filtrar. Se ha incluido el archivo `ByteNet.csv` en `Proyecto/Material`
 

@@ -1,8 +1,6 @@
 # Autómatas y Gramática | Proyecto final
-![imagen](https://github.com/ELCOMANDANTE18/Proyecto_AyG/assets/96461803/227999da-59ff-41ee-9487-61773a4be307)
-
+![imagen](https://github.com/ELCOMANDANTE18/Proyecto_AyG/assets/96461803/a4735d77-0cd8-441c-933a-21f05ba12234)
 Este proyecto buscará en el registro de conexiones filtrando por usuario y rango de fechas. Se podrá visualizar una tabla y exportarla en formato Excel.
-
 ## Instalación
 ### Nota previa
 Si desea descargar los datos incluidos con el proyecto, instale [Git LFS](https://git-lfs.com/).

@@ -1,9 +1,10 @@
 import sys
 from PyQt5 import QtWidgets, QtGui
-from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QLabel, QLineEdit, QPushButton, QTextEdit, QVBoxLayout, QWidget, QTableWidget, QTableWidgetItem
+from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QLabel, QLineEdit, QPushButton, QTextEdit, QHBoxLayout, QVBoxLayout, QWidget, QTableWidget, QTableWidgetItem, QListWidget, QMessageBox
 import pandas as pd
 import re
 import os
+
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -37,26 +38,78 @@ class MainWindow(QMainWindow):
         # Crear el widget de la tabla para mostrar el resultado
         self.tabla_resultado = QTableWidget(self)
         self.tabla_resultado.setColumnCount(4)
+        self.tabla_resultado.setHorizontalHeaderLabels(["Usuario", "Fecha de conexión", "Fecha de desconexión", "Dirección MAC"])
+        self.tabla_resultado.horizontalHeader().setStretchLastSection(True)
+        self.tabla_resultado.resizeColumnsToContents()
 
         # Crear la etiqueta para mostrar mensajes
         self.mensaje_label = QLabel("", self)
 
+        # Crear el widget de la lista de usuarios
+        self.lista_usuarios = QListWidget(self)
+        self.lista_usuarios.itemClicked.connect(self.copiar_usuario)
+
+        # Crear botón "Acerca de"
+        acerca_de_button = QPushButton("i", self)
+        acerca_de_button.clicked.connect(self.mostrar_acerca_de)
+
+        # Crear la zona de importación
+        importar_layout = QHBoxLayout()
+        importar_layout.addWidget(importar_button)
+        importar_layout.addWidget(self.ruta_label)
+        importar_layout.addWidget(acerca_de_button)
+        # Tamaño máximo del botón "Acerca de"
+        acerca_de_button.setMaximumWidth(24)
+
+        # Crear la zona de búsqueda
+        busqueda_layout = QHBoxLayout()
+        busqueda_layout.addWidget(QLabel("Búsqueda:"))
+        busqueda_layout.addWidget(self.busqueda_entry)
+
+        # Crear la zona de fecha inicio
+        fecha_inicio_layout = QHBoxLayout()
+        fecha_inicio_layout.addWidget(QLabel("Fecha inicio:"))
+        fecha_inicio_layout.addWidget(self.fecha_inicio_entry)
+
+        # Crear la zona de fecha fin
+        fecha_fin_layout = QHBoxLayout()
+        fecha_fin_layout.addWidget(QLabel("Fecha fin:"))
+        fecha_fin_layout.addWidget(self.fecha_fin_entry)
+
+        # Crear la zona de botones
+        botones_layout = QHBoxLayout()
+        botones_layout.addWidget(buscar_button)
+        botones_layout.addWidget(exportar_button)
+
+        # Crear la zona de mensajes
+        mensaje_layout = QHBoxLayout()
+        mensaje_layout.addWidget(self.mensaje_label)
+
+        # Crear la zona de la lista de usuarios
+        lista_usuarios_layout = QVBoxLayout()
+        lista_usuarios_layout.addWidget(QLabel("Usuarios:"))
+        lista_usuarios_layout.addWidget(self.lista_usuarios)
+        
+        # Hacer menos ancha la lista de usuarios
+        self.lista_usuarios.setMaximumWidth(200)
+
         # Configurar el diseño de la ventana principal
         central_widget = QWidget()
         layout = QVBoxLayout(central_widget)
-        layout.addWidget(importar_button)
-        layout.addWidget(self.ruta_label)
-        layout.addWidget(QLabel("Búsqueda:"))
-        layout.addWidget(self.busqueda_entry)
-        layout.addWidget(self.mensaje_label)
-        layout.addWidget(QLabel("Fecha inicio:"))
-        layout.addWidget(self.fecha_inicio_entry)
-        layout.addWidget(QLabel("Fecha fin:"))
-        layout.addWidget(self.fecha_fin_entry)
-        layout.addWidget(buscar_button)
-        layout.addWidget(self.tabla_resultado)
+        layout.addLayout(importar_layout)
+        layout.addLayout(busqueda_layout)
+        layout.addLayout(fecha_inicio_layout)
+        layout.addLayout(fecha_fin_layout)
+        layout.addLayout(botones_layout)
+
+        # Agregar la lista de usuarios y la tabla en un layout horizontal
+        usuarios_tabla_layout = QHBoxLayout()
+        usuarios_tabla_layout.addLayout(lista_usuarios_layout)
+        usuarios_tabla_layout.addWidget(self.tabla_resultado)
+        layout.addLayout(usuarios_tabla_layout)
+
+        layout.addLayout(mensaje_layout)
         self.setCentralWidget(central_widget)
-        layout.addWidget(exportar_button)
 
         # Establecer tamaño de la ventana
         self.resize(800, 600)
@@ -77,6 +130,22 @@ class MainWindow(QMainWindow):
 
             # Actualizar la etiqueta de la ruta del archivo con el nombre
             self.ruta_label.setText(nombre_archivo)
+
+            # Cargar los usuarios en la lista
+            self.cargar_usuarios()
+
+    def cargar_usuarios(self):
+        if self.df is not None and not self.df.empty:
+            usuarios = self.df['Usuario'].unique().tolist()
+            usuarios = [usuario for usuario in usuarios if re.match(r'^[a-zA-Z0-9_-]+$', usuario)]
+            usuarios.sort()  # Ordenar alfabéticamente
+            self.lista_usuarios.clear()
+            self.lista_usuarios.addItems(usuarios)
+            self.lista_usuarios.adjustSize()
+
+    def copiar_usuario(self, item):
+        usuario = item.text()
+        self.busqueda_entry.setText(usuario)
 
     def buscar(self):
         if self.df is None or self.df.empty:  # Verificar si el DataFrame no está vacío
@@ -159,7 +228,7 @@ class MainWindow(QMainWindow):
 
         # Establecer los nombres de las columnas
         nombres_columnas = self.df_resultado.columns.tolist()
-        self.tabla_resultado.setHorizontalHeaderLabels(nombres_columnas)
+        self.tabla_resultado.setHorizontalHeaderLabels(["Usuario", "Inicio de Conexión", "Fin de Conexión", "MAC Cliente"])
 
         # Recorrer los datos del DataFrame y agregarlos a la tabla
         for i, fila in enumerate(self.df_resultado.itertuples(index=False), 0):
@@ -170,12 +239,17 @@ class MainWindow(QMainWindow):
         # Ajustar el tamaño de las columnas al contenido
         self.tabla_resultado.resizeColumnsToContents()
 
+        # Ajustar el ancho de la tabla a la ventana
+        self.tabla_resultado.horizontalHeader().setStretchLastSection(True)
+
     def mostrar_mensaje(self, mensaje):
         self.mensaje_label.setText(mensaje)
 
     def mostrar_error(self, error):
         self.mensaje_label.setText(f"<span style='color: red'>{error}</span>")
 
+    def mostrar_acerca_de(self):
+        QMessageBox.about(self, "Acerca de", "<center>Este programa ha sido desarrollado por<br><a href='https://github.com/AdrianoTisera/'>Adriano Gabriel Tisera Aguilera</a><br><a href='https://github.com/ELCOMANDANTE18'>Víctor Benjamín Giménez</a><br><a href='https://github.com/perezmatias'>Matías Agustín Pérez</a><br><a href='https://github.com/facundomala1'>Facundo Gabriel Mala Palleres</a><br><a href='https://github.com/annapaez'>Anna Clara Páez Rocha</a><br><br>Para más información visite <a href='https://github.com/ELCOMANDANTE18/Proyecto_AyG'>el respositorio de Github</a></center>")
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

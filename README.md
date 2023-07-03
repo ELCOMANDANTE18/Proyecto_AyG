@@ -4,42 +4,43 @@
 Este proyecto buscará en el registro de conexiones filtrando por usuario y rango de fechas. Se podrá visualizar una tabla y exportarla en formato Excel.
 
 ## Instalación
-- Instalar [Git LFS](https://git-lfs.com/)
-- Clonar el repositorio:
+### Nota previa
+Si desea descargar los datos incluidos con el proyecto, instale [Git LFS](https://git-lfs.com/).
+1. Clonar el repositorio:
 ```bash
 git clone https://github.com/ELCOMANDANTE18/Proyecto_AyG
 ```
-- Como alternativa se puede utilizar el siguiente comando:
-```bash
-git lfs clone https://github.com/ELCOMANDANTE18/Proyecto_AyG
-```
-- Cambiar al directorio:
+2. Cambiar al directorio:
 ```bash
 cd Proyecto_AyG/Proyecto
 ```
-- Instalar los requerimientos:
+3. Instalar los requerimientos:
 ```bash
 chmod +x install.sh
 ./install.sh
 ```
 ## Modo de uso
-- Ejecutar `buscar.py`
+1. Ejecutar `buscar.py`
 ```
 python3 buscar.py
 ```
-- Se abrirá una ventana
+2. Se abrirá una ventana
 
 ![imagen](https://github.com/ELCOMANDANTE18/Proyecto_AyG/assets/96461803/3fb47343-ba2e-4501-8965-eaf76bc6bb23)
-- Al presionar "Importar CSV" se abrirá el explorador de archivos para seleccionar el .csv a filtrar. Se ha incluido el archivo `ByteNet.csv` en `Proyecto/Material`
+
+3. Al presionar "Importar CSV" se abrirá el explorador de archivos para seleccionar el .csv a filtrar. Se ha incluido el archivo `ByteNet.csv` en `Proyecto/Material`
 
 ![imagen](https://github.com/ELCOMANDANTE18/Proyecto_AyG/assets/96461803/4382dca1-f249-4093-98ea-f781902d0978)
-- En el cuadro de búsqueda se coloca el nombre de usuario a filtrar, y en los otros recuadros el rango de fechas deseado en formato AAAA-MM-DD
+
+4. En el cuadro de búsqueda se coloca el nombre de usuario a filtrar, y en los otros recuadros el rango de fechas deseado en formato AAAA-MM-DD
 
 ![imagen](https://github.com/ELCOMANDANTE18/Proyecto_AyG/assets/96461803/cae43db6-7b70-4238-a53f-b6b6b5fc84c5)
-- Al presionar `Buscar`, se mostrará una vista previa de los datos filtrados
+
+5. Al presionar `Buscar`, se mostrará una vista previa de los datos filtrados
 
 ![imagen](https://github.com/ELCOMANDANTE18/Proyecto_AyG/assets/96461803/b9848e69-6d09-4c90-9aaa-8697bc910712)
-- El resultado se puede `Exportar a Excel`
+
+6. El resultado se puede `Exportar a Excel`
 
 ![imagen](https://github.com/ELCOMANDANTE18/Proyecto_AyG/assets/96461803/a9a45288-7455-4a86-984a-6f71ae9a2116)
 

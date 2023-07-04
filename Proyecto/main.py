@@ -21,8 +21,8 @@ class MainWindow(QMainWindow):
         importar_button = QPushButton("Importar CSV", self)
         importar_button.clicked.connect(self.importar_csv)
         importar_button.setIcon(QtGui.QIcon("./icons/file-import.svg"))
-        # Establecer el tamaño máximo del botón
-        importar_button.setMaximumWidth(120)
+        # Tamaño máximo del botón a tamaño del texto
+        importar_button.setMaximumWidth(importar_button.sizeHint().width())
 
         # Crear la etiqueta para mostrar la ruta del archivo
         self.ruta_label = QLabel("", self)
@@ -36,15 +36,15 @@ class MainWindow(QMainWindow):
         buscar_button = QPushButton("Buscar", self)
         buscar_button.clicked.connect(self.buscar)
         buscar_button.setIcon(QtGui.QIcon("./icons/magnify.svg"))
-        # Establecer el tamaño máximo del botón
-        buscar_button.setMaximumWidth(70)
+        # Tamaño máximo del botón a tamaño del texto
+        buscar_button.setMaximumWidth(buscar_button.sizeHint().width())
 
         # Crear el botón para exportar a Excel
         exportar_button = QPushButton("Exportar a Excel", self)
         exportar_button.clicked.connect(self.exportar_excel)
         exportar_button.setIcon(QtGui.QIcon("./icons/file-excel.svg"))
-        # Establecer el tamaño máximo del botón
-        exportar_button.setMaximumWidth(120)
+        # Tamaño máximo del botón a tamaño del texto
+        exportar_button.setMaximumWidth(exportar_button.sizeHint().width())
 
         # Crear el widget de la tabla para mostrar el resultado
         self.tabla_resultado = QTableWidget(self)

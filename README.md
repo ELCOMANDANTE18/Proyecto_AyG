@@ -4,7 +4,7 @@ Este proyecto buscará en el registro de conexiones filtrando por usuario y rang
 ## Instalación
 ### Nota previa
 Si desea descargar los datos incluidos con el proyecto, instale [Git LFS](https://git-lfs.com/).
-Se creará un entorno virtual con las siguientes dependencias: `pandas regex pyqt5 qdarkstyle`
+Se creará un entorno virtual con las siguientes dependencias: `pandas regex pyqt5 qdarkstyle openpyxl`
 1. Clonar el repositorio:
 ```bash
 git clone https://github.com/ELCOMANDANTE18/Proyecto_AyG

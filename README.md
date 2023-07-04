@@ -4,6 +4,7 @@ Este proyecto buscará en el registro de conexiones filtrando por usuario y rang
 ## Instalación
 ### Nota previa
 Si desea descargar los datos incluidos con el proyecto, instale [Git LFS](https://git-lfs.com/).
+Se creará un entorno virtual con las siguientes dependencias: `pandas regex pyqt5 qdarkstyle`
 1. Clonar el repositorio:
 ```bash
 git clone https://github.com/ELCOMANDANTE18/Proyecto_AyG
@@ -12,15 +13,15 @@ git clone https://github.com/ELCOMANDANTE18/Proyecto_AyG
 ```bash
 cd Proyecto_AyG/Proyecto
 ```
-3. Instalar los requerimientos:
+3. Iniciar el programa:
 ```bash
-chmod +x install.sh
-./install.sh
+chmod +x iniciar.sh
+./iniciar.sh
 ```
 ## Modo de uso
-1. Ejecutar `buscar.py` desde el directorio del archivo.
+1. Ejecutar `iniciar.sh` desde el directorio del archivo. Si es la primera vez que se ejecuta instalará las dependencias; Si hay alguna actualización la comprobará e instalará automáticamente.
 ```
-python3 buscar.py
+./iniciar.sh
 ```
 2. Se abrirá una ventana
 

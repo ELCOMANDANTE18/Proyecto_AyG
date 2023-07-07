@@ -72,7 +72,7 @@ El programa filtra automáticamente las filas con valores corruptos, nulos o inc
           <samp>
             <b>
               <br>
-              <img src="https://images.weserv.nl/?url=https://avatars.githubusercontent.com/u/96461803?v=latest&h=128&w=128&fit=cover&mask=circle&maxage=7d">
+              <img src="https://images.weserv.nl/?url=https://avatars.githubusercontent.com/u/96461803?v=latest&h=128&w=128&fit=cover&mask=circle&maxage=1s">
             </b>
             <br>
             <img src="https://readme-typing-svg.herokuapp.com/?font=Iosevka&duration=3000&pause=1000&color=FFFFFF&center=true&background=00000080&width=435&lines=Adriano+Gabriel+Tisera+Aguilera;Legajo%3A+59059;ag.tisera%40alumno.um.edu.ar">

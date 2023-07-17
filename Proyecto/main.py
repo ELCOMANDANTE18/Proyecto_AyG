@@ -155,7 +155,7 @@ class MainWindow(QMainWindow):
     def cargar_usuarios(self):
         if self.df is not None and not self.df.empty:
             usuarios = self.df['Usuario'].unique().tolist()
-            usuarios = [usuario for usuario in usuarios if re.match(r'^[a-zA-Z0-9_-]+$', usuario)]
+            usuarios = [usuario for usuario in usuarios if re.match(r'^[a-zA-Z0-9_-]{5,}$', usuario)]
             usuarios.sort()  # Ordenar alfabéticamente
             self.lista_usuarios.clear()
             self.lista_usuarios.addItems(usuarios)
